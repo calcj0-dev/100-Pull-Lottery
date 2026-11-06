@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "rule": "100回で出た当たりのうち、当せん金が一番大きいものの等級で決める。上から順に評価し、最初に当てはまったもの",
+  "titles": [
+    { "id": "t_p1",    "prizes": ["p1"],                 "sound": "big" },
+    { "id": "t_big",   "prizes": ["p1adj", "p2", "p3"],  "sound": "big" },
+    { "id": "t_p4",    "prizes": ["p4"],                 "sound": "big" },
+    { "id": "t_kumi",  "prizes": ["p1kumi"],             "sound": "mid" },
+    { "id": "t_p5",    "prizes": ["p5"],                 "sound": "mid" },
+    { "id": "t_p6",    "prizes": ["p6"],                 "sound": "small" },
+    { "id": "t_p7",    "prizes": ["p7"],                 "sound": "lose" },
+    { "id": "t_none",  "prizes": [],                     "sound": "lose" }
+  ]
+}

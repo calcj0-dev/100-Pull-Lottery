@@ -1,0 +1,16 @@
+{
+  "source": "みずほ銀行『宝くじ 発売予定』年末ジャンボ宝くじ（第1134回全国）2026年11月6日確認。1ユニット＝2,000万枚、23ユニット",
+  "price": 300,
+  "unitTickets": 20000000,
+  "prizes": [
+    { "id": "p1",     "amount": 700000000, "perUnit": 1 },
+    { "id": "p1adj",  "amount": 150000000, "perUnit": 2 },
+    { "id": "p1kumi", "amount": 100000,    "perUnit": 199 },
+    { "id": "p2",     "amount": 100000000, "perUnit": 1 },
+    { "id": "p3",     "amount": 10000000,  "perUnit": 2 },
+    { "id": "p4",     "amount": 1000000,   "perUnit": 60 },
+    { "id": "p5",     "amount": 10000,     "perUnit": 60000 },
+    { "id": "p6",     "amount": 3000,      "perUnit": 200000 },
+    { "id": "p7",     "amount": 300,       "perUnit": 2000000 }
+  ]
+}

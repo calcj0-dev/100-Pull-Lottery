@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "source": {
+    "basis": "2026年の年末ジャンボ宝くじ（第1134回全国）と同じ比率",
+    "checkedAt": "2026-11-06",
+    "ref": "みずほ銀行『宝くじ 発売予定』",
+    "officialChecked": false
+  },
+  "price": 300,
+  "unitTickets": 20000000,
+  "prizes": [
+    { "id": "p1",     "amount": 700000000, "perUnit": 1 },
+    { "id": "p1adj",  "amount": 150000000, "perUnit": 2 },
+    { "id": "p2",     "amount": 100000000, "perUnit": 1 },
+    { "id": "p3",     "amount": 10000000,  "perUnit": 2 },
+    { "id": "p4",     "amount": 1000000,   "perUnit": 60 },
+    { "id": "p1kumi", "amount": 100000,    "perUnit": 199 },
+    { "id": "p5",     "amount": 10000,     "perUnit": 60000 },
+    { "id": "p6",     "amount": 3000,      "perUnit": 200000 },
+    { "id": "p7",     "amount": 300,       "perUnit": 2000000 }
+  ]
+}

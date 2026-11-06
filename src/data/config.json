@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "modes": {
+    "hundred":  { "enabled": true,  "presses": 100, "ticketsPerPress": 1 },
+    "infinite": { "enabled": false, "ticketsPerYear": null, "note": "後で追加。2等の称号・毎年何枚・年数の一言は未決定" }
+  },
+  "luckDisplay": { "minPct": 0.1 },
+  "fullScreenPrizes": ["p1"],
+  "sounds": {
+    "press": "pon",
+    "miss": null,
+    "byPrize": {
+      "p7": "chari", "p6": "chari",
+      "p5": "chari2",
+      "p1kumi": "fanfare", "p4": "fanfare", "p3": "fanfare", "p2": "fanfare", "p1adj": "fanfare", "p1": "fanfare"
+    },
+    "result": { "big": "fanfareLong", "mid": "chari2", "small": "chari", "lose": "sad" }
+  },
+  "hashtag": "宝くじ100連ガチャ",
+  "links": {
+    "tameru": "https://tameru-lovat.vercel.app/?utm_source=bakage&utm_medium=game&utm_campaign=baka040",
+    "tva": "https://trader-vs-autopilot.vercel.app/?utm_source=bakage&utm_medium=game&utm_campaign=baka040",
+    "follow": "https://x.com/shooojp19",
+    "xIntent": "https://x.com/intent/post"
+  }
+}
