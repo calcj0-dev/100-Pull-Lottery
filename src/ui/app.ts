@@ -20,6 +20,8 @@ export type App = {
   readonly screen: ScreenName;
   /** 今のゲーム（S2 で作り、S3 で結果を見る） */
   game: Mode | null;
+  /** 結果画面に出している結果（M1 結果画像で使う） */
+  lastResult: ModeResult | null;
 };
 
 export type ScreenView = {
@@ -61,6 +63,7 @@ export function createApp(
 
   const app: App = {
     game: null,
+    lastResult: null,
     get screen() {
       return screenName;
     },

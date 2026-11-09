@@ -1,5 +1,9 @@
 // 投稿文（ゲーム仕様 8.1）と X の文字数（受け入れ T-07）
-import { format, type Vars } from '../i18n';
+import { formatYen } from '../core/format';
+import { luckLabel } from '../core/luck';
+import { config, messagesByLocale } from '../data';
+import { format, getLocale, tId, type Vars } from '../i18n';
+import type { ModeResult } from '../modes/types';
 
 export type ShareVars = { spent: string; won: string; pct: string; title: string; hashtag: string };
 
@@ -19,3 +23,16 @@ export function xLength(text: string, url?: string): number {
 }
 
 export const X_MAX = 280;
+
+/** 結果から投稿文を作る（ゲーム仕様 8.1）。運の良さが 0.1% 未満なら textUnder */
+export function resultShareText(r: ModeResult): string {
+  const ja = messagesByLocale[getLocale()];
+  const luck = luckLabel(r.upper, config.luckDisplay);
+  return shareText(ja.share, luck.key === 'under', {
+    spent: formatYen(r.spent, ja.format),
+    won: formatYen(r.won, ja.format),
+    pct: luck.value,
+    title: tId('titles', r.titleId),
+    hashtag: config.hashtag,
+  });
+}

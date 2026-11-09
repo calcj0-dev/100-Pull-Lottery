@@ -8,6 +8,15 @@ export function imageFile(blob: Blob): File {
   return new File([blob], IMAGE_FILE_NAME, { type: 'image/png' });
 }
 
+/** 指で操作する端末か（PC の共有画面には X が出ないことが多いため、Web Share はスマホなどだけで使う） */
+export function isTouch(): boolean {
+  try {
+    return matchMedia('(pointer: coarse)').matches;
+  } catch {
+    return false;
+  }
+}
+
 /** 画像つきで Web Share できる端末か */
 export function canShareImage(blob: Blob | null): boolean {
   if (!blob || typeof navigator.canShare !== 'function' || typeof navigator.share !== 'function') return false;
@@ -45,7 +54,7 @@ export async function shareWithImage(text: string, blob: Blob): Promise<boolean>
  * 共有シートが使えなければダウンロード。どれもだめなら M1 の画像を長押しで保存してもらう
  */
 export async function saveImage(blob: Blob): Promise<void> {
-  if (matchMedia('(pointer: coarse)').matches && canShareImage(blob)) {
+  if (isTouch() && canShareImage(blob)) {
     try {
       await navigator.share({ files: [imageFile(blob)] });
       return;

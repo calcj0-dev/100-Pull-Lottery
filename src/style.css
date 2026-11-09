@@ -554,6 +554,31 @@ button.link {
   text-align: center;
 }
 
+.thumb {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+  cursor: pointer;
+  aspect-ratio: 1200 / 630;
+}
+
+.thumb-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.btn-share {
+  border-color: #000;
+  background: #000;
+  color: #fff;
+}
+
 /* ---- 重ね表示 ---- */
 .modal {
   width: min(100% - 24px, 406px);
@@ -587,6 +612,33 @@ button.link {
   display: flex;
   justify-content: center;
   margin-top: 8px;
+}
+
+.image-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  aspect-ratio: 1200 / 630;
+  background: var(--surface);
+  -webkit-touch-callout: default;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.modal-actions.stack {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-plain {
+  border: 0;
+  background: none;
 }
 
 .table-wrap {

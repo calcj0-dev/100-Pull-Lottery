@@ -1,6 +1,9 @@
-// 重ね表示（画面設計 7章）。M2 計算の前提、M3 プライバシー。M1 結果画像は #7 で作る
+// 重ね表示（画面設計 7章）。M1 結果画像、M2 計算の前提、M3 プライバシー
 
-import { gaId } from '../analytics';
+import { gaId, track } from '../analytics';
+import { resultShareText } from '../share/postText';
+import { resultImage } from '../share/resultImage';
+import { canShareImage, isTouch, saveImage, shareWithImage, toDataUrl } from '../share/share';
 import { formatOdds, formatYen } from '../core/format';
 import { config, messagesByLocale, prizeData } from '../data';
 import { getLocale, t, tId } from '../i18n';
@@ -76,7 +79,46 @@ const privacy: ModalFactory = (app) => {
   return frame(app, t('privacy.heading'), body);
 };
 
-/** M1 結果画像のプレビュー（#7 で作る） */
-const image: ModalFactory = (app) => frame(app, t('result.shareImage'), []);
+/** M1 結果画像のプレビュー：画像を幅いっぱいに。「画像を付けてシェア」（使える端末だけ）「画像を保存」「閉じる」 */
+const image: ModalFactory = (app) => {
+  const r = app.lastResult;
+  const img = h('img', { className: 'image-preview', attrs: { alt: t('image.alt'), width: '1200', height: '630' } });
+  let blob: Blob | null = null;
+  const titleId = r?.titleId ?? '';
+  const shareBtn = button(
+    t('result.shareImage'),
+    () => {
+      if (!blob || !r) return;
+      track('share_click', { method: 'web_share', title: titleId });
+      void shareWithImage(resultShareText(r), blob);
+    },
+    'btn btn-primary',
+  );
+  const saveBtn = button(
+    t('result.saveImage'),
+    () => {
+      if (!blob) return;
+      track('share_click', { method: 'save_image', title: titleId });
+      void saveImage(blob);
+    },
+    'btn',
+  );
+  shareBtn.hidden = true;
+  saveBtn.disabled = true;
+  if (r) {
+    void resultImage(r).then(async (b) => {
+      blob = b;
+      if (!b) return;
+      shareBtn.hidden = !(isTouch() && canShareImage(b));
+      saveBtn.disabled = false;
+      img.src = await toDataUrl(b);
+    });
+  }
+  return h('div', { className: 'modal-body modal-image' }, [
+    img,
+    h('p', { className: 'note', text: t('image.longPress') }),
+    h('div', { className: 'modal-actions stack' }, [shareBtn, saveBtn, button(t('common.close'), () => app.closeModal(), 'btn btn-plain')]),
+  ]);
+};
 
 export const modals: Record<ModalName, ModalFactory> = { basis, privacy, image };

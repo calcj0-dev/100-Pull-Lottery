@@ -1,4 +1,4 @@
-// S3 結果（画面設計 6章）。結果画像とシェアは #7 で足す
+// S3 結果（画面設計 6章）
 
 import { track } from '../../analytics';
 import { playSound } from '../../audio';
@@ -8,6 +8,9 @@ import { luckLabel } from '../../core/luck';
 import { config, messagesByLocale, prizeData, titleData, type ResultSound, type SoundName } from '../../data';
 import { titleSound } from '../../core/title';
 import { getLocale, t, tId } from '../../i18n';
+import { resultShareText } from '../../share/postText';
+import { resultImage } from '../../share/resultImage';
+import { canShareImage, isTouch, openXIntent, shareWithImage, toDataUrl } from '../../share/share';
 import type { ScreenFactory } from '../app';
 import { button, externalLink, h, linkButton } from '../dom';
 import { disclaimer, soundButton } from '../parts';
@@ -32,6 +35,29 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
     return a;
   };
 
+  app.lastResult = r;
+
+  // 結果画像は画面を開いたときに作り始める（シェアのときにすぐ使えるように）
+  let imageBlob: Blob | null = null;
+  const thumbImg = h('img', { className: 'thumb-img', attrs: { alt: t('image.alt'), width: '1200', height: '630' } });
+  void resultImage(r).then(async (b) => {
+    imageBlob = b;
+    if (b) thumbImg.src = await toDataUrl(b);
+  });
+  const thumb = h('button', { className: 'thumb', attrs: { type: 'button', 'aria-label': t('image.alt') }, on: { click: () => app.openModal('image') } }, [thumbImg]);
+
+  /** 「Xでシェア」：画像を付けて共有できるスマホは Web Share、それ以外は X の投稿画面（技術設計 6章） */
+  const onShare = () => {
+    const text = resultShareText(r);
+    if (isTouch() && imageBlob && canShareImage(imageBlob)) {
+      track('share_click', { method: 'web_share', title: r.titleId });
+      void shareWithImage(text, imageBlob);
+    } else {
+      track('share_click', { method: 'x_intent', title: r.titleId });
+      openXIntent(text);
+    }
+  };
+
   // 結果の音（称号ごとの big／mid／small／lose。ゲーム仕様 5章）
   playSound(config.sounds.result[titleSound(r.titleId, titleData) as ResultSound] as SoundName);
 
@@ -51,7 +77,9 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
       h('h2', { text: t('result.breakdown') }),
       rows.length ? h('ul', {}, rows) : h('p', { text: t('result.breakdownNone') }),
     ]),
+    thumb,
     h('div', { className: 'result-actions' }, [
+      button(t('result.share'), onShare, 'btn btn-share'),
       button(
         t('result.retry'),
         () => {
