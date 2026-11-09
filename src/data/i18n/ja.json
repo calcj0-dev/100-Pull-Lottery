@@ -25,7 +25,11 @@
     "miss": "ハズレ",
     "hit": "{prize} {amount}！",
     "bigHit": "{prize}\n{amount}",
-    "toResult": "結果を見る"
+    "toResult": "結果を見る",
+    "back": "タイトルに戻る",
+    "progress": "{n}/{total}",
+    "hitsLabel": "当たり：",
+    "hitsItem": "{prize}×{count}"
   },
   "prizes": {
     "p1": "1等",
