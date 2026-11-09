@@ -1,7 +1,8 @@
 // JSON のデータを読み込み、型を付けて渡す窓口（技術設計 2.1）。
 // satisfies により、項目の不足・型の違いはビルド時にエラーになる。
-// 中身の検査（ID の重複・表の順番など）は #2 で足す
+// 中身のつじつま（ID の重複・表の順番など）は読み込み時に dataCheck.ts で検査する（T-08）
 
+import { assertData, type SOUND_NAMES } from './dataCheck';
 import type { Locale, Messages } from './i18n/types';
 import configJson from './data/config.json';
 import jaJson from './data/i18n/ja.json';
@@ -9,7 +10,7 @@ import luckTableJson from './data/luck_table.json';
 import prizesJson from './data/prizes.json';
 import titlesJson from './data/titles.json';
 
-export type SoundName = 'pon' | 'chari' | 'chari2' | 'fanfare' | 'fanfareLong' | 'sad';
+export type SoundName = (typeof SOUND_NAMES)[number];
 export type ResultSound = 'big' | 'mid' | 'small' | 'lose';
 
 export type PrizeData = {
@@ -60,6 +61,11 @@ export const luckTable = luckTableJson satisfies LuckTable;
 
 /** 言語ごとの文言。言語を足すときは JSON を作ってここに1行足す */
 export const messagesByLocale = { ja: jaJson } satisfies Record<Locale, Messages>;
+
+// 起動時に1回だけ検査する。壊れたデータでは動かさない
+for (const messages of Object.values(messagesByLocale)) {
+  assertData({ prizes: prizeData, titles: titleData, config, luckTable, messages });
+}
 
 /** 作品のURL（環境変数 VITE_SITE_URL。技術設計 3章）。未設定なら今のページのURL */
 export function siteUrl(): string {
