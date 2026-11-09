@@ -2,6 +2,7 @@
 
 import { track } from '../../analytics';
 import { config } from '../../data';
+import { showModeSelect } from '../../modes';
 import { t } from '../../i18n';
 import type { ScreenFactory } from '../app';
 import { button, externalLink, h, linkButton } from '../dom';
@@ -20,6 +21,8 @@ export const titleScreen: ScreenFactory<'title'> = (app) => {
     h('h1', { className: 'title', text: t('app.name') }),
     h('p', { className: 'lead', text: t('app.tagline') }),
     art,
+    // 無限モードを足すときに、ここへモードの選択を出す（技術設計 9章・L4）
+    showModeSelect(config) ? h('div', { className: 'mode-select', attrs: { 'data-mode-select': '' } }) : null,
     button(t('title.start'), () => app.go('play', { from: 'title' }), 'btn btn-primary btn-start'),
     h('nav', { className: 'link-row' }, [
       linkButton(t('common.basisLink'), () => {

@@ -1,13 +1,15 @@
-// S3 結果（画面設計 6章）。#4 では金額・運の良さ・称号・内訳・もう一回まで。シェア・導線・音は #6・#7 で足す
+// S3 結果（画面設計 6章）。結果画像とシェアは #7 で足す
 
 import { track } from '../../analytics';
+import { playSound } from '../../audio';
 import { formatYen } from '../../core/format';
 import { net } from '../../core/hundred';
 import { luckLabel } from '../../core/luck';
-import { config, messagesByLocale, prizeData } from '../../data';
+import { config, messagesByLocale, prizeData, titleData, type ResultSound, type SoundName } from '../../data';
+import { titleSound } from '../../core/title';
 import { getLocale, t, tId } from '../../i18n';
 import type { ScreenFactory } from '../app';
-import { button, h, linkButton } from '../dom';
+import { button, externalLink, h, linkButton } from '../dom';
 import { disclaimer, soundButton } from '../parts';
 
 const yen = (v: number) => formatYen(v, messagesByLocale[getLocale()].format);
@@ -21,6 +23,17 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
     .sort((a, b) => b.amount - a.amount)
     .filter((p) => r.counts[p.id])
     .map((p) => h('li', { text: t('result.breakdownRow', { prize: tId('prizes', p.id), amount: yen(p.amount), count: r.counts[p.id]! }) }));
+
+  /** 外部リンク（新しいタブ）。押したら main_app_click */
+  const appLink = (text: string, href: string, target: 'tameru' | 'tva' | 'follow', className: string) => {
+    const a = externalLink(text, href);
+    a.className = className;
+    a.addEventListener('click', () => track('main_app_click', { target }));
+    return a;
+  };
+
+  // 結果の音（称号ごとの big／mid／small／lose。ゲーム仕様 5章）
+  playSound(config.sounds.result[titleSound(r.titleId, titleData) as ResultSound] as SoundName);
 
   const el = h('section', { className: 'screen screen-result' }, [
     h('div', { className: 'top-bar result-bar' }, [h('h1', { className: 'result-heading', text: t('result.heading') }), sound.el]),
@@ -47,6 +60,18 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
         },
         'btn btn-primary',
       ),
+    ]),
+    h('section', { className: 'apps' }, [
+      h('h2', { className: 'apps-heading', text: t('links.heading') }),
+      h('div', { className: 'app-card' }, [
+        h('p', { text: t('links.tameru') }),
+        appLink(t('links.tameruButton'), config.links.tameru, 'tameru', 'btn btn-app'),
+      ]),
+      h('div', { className: 'app-card' }, [
+        h('p', { text: t('links.tva') }),
+        appLink(t('links.tvaButton'), config.links.tva, 'tva', 'btn btn-app'),
+      ]),
+      appLink(t('links.follow'), config.links.follow, 'follow', 'link follow-link'),
     ]),
     h('nav', { className: 'link-row' }, [
       linkButton(t('common.basisLink'), () => {

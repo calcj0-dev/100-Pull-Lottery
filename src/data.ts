@@ -44,7 +44,15 @@ export type GameConfig = {
     result: Record<ResultSound, string>;
   };
   hashtag: string;
-  links: { tameru: string; tva: string; follow: string; xIntent: string };
+  links: {
+    tameru: string;
+    tva: string;
+    follow: string;
+    xIntent: string;
+    googlePrivacy: string;
+    gaOptout: string;
+    vercelPrivacy: string;
+  };
 };
 
 export type LuckTable = {

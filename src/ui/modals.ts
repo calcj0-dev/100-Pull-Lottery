@@ -1,10 +1,11 @@
 // 重ね表示（画面設計 7章）。M2 計算の前提、M3 プライバシー。M1 結果画像は #7 で作る
 
+import { gaId } from '../analytics';
 import { formatOdds, formatYen } from '../core/format';
-import { messagesByLocale, prizeData } from '../data';
+import { config, messagesByLocale, prizeData } from '../data';
 import { getLocale, t, tId } from '../i18n';
 import type { App, ModalFactory, ModalName } from './app';
-import { button, h } from './dom';
+import { button, externalLink, h } from './dom';
 
 const fmt = () => messagesByLocale[getLocale()].format;
 
@@ -48,8 +49,32 @@ const basis: ModalFactory = (app) => {
   ]);
 };
 
-/** M3 プライバシーについて（文言は U4：公開前にオーナー確認） */
-const privacy: ModalFactory = (app) => frame(app, t('privacy.heading'), [h('p', { text: t('privacy.body') })]);
+/** M3 プライバシーについて（技術設計 7.3。文言は U4：公開前にオーナー確認）。GA4 を使わないときは Vercel Analytics だけの説明 */
+const privacy: ModalFactory = (app) => {
+  const p = (text: string) => h('p', { text });
+  const link = (text: string, href: string) => h('p', {}, [externalLink(text, href)]);
+  const body = gaId()
+    ? [
+        p(t('privacy.p1')),
+        p(t('privacy.p2')),
+        p(t('privacy.p3')),
+        p(t('privacy.p4')),
+        p(t('privacy.p5')),
+        p(t('privacy.p6')),
+        link(t('privacy.googlePolicy'), config.links.googlePrivacy),
+        link(t('privacy.optout'), config.links.gaOptout),
+        link(t('privacy.vercelPolicy'), config.links.vercelPrivacy),
+      ]
+    : [
+        p(t('privacy.basic.p1')),
+        p(t('privacy.basic.p2')),
+        p(t('privacy.basic.p3')),
+        p(t('privacy.p4')),
+        p(t('privacy.p5')),
+        link(t('privacy.vercelPolicy'), config.links.vercelPrivacy),
+      ];
+  return frame(app, t('privacy.heading'), body);
+};
 
 /** M1 結果画像のプレビュー（#7 で作る） */
 const image: ModalFactory = (app) => frame(app, t('result.shareImage'), []);
