@@ -29,7 +29,8 @@
     "back": "タイトルに戻る",
     "progress": "{n}/{total}",
     "hitsLabel": "当たり：",
-    "hitsItem": "{prize}×{count}"
+    "hitsItem": "{prize}×{count}",
+    "tapToContinue": "タップで続ける"
   },
   "prizes": {
     "p1": "1等",

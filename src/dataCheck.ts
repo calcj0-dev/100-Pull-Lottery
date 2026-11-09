@@ -75,6 +75,7 @@ export function checkData(d: AllData): string[] {
 
   // 設定：1等の演出・回数
   for (const id of config.fullScreenPrizes) if (!known.has(id)) err(`unknown prize in fullScreenPrizes: ${id}`);
+  for (const id of config.bandPrizes) if (!known.has(id)) err(`unknown prize in bandPrizes: ${id}`);
   const h = config.modes.hundred;
   if (!isPosInt(h.presses) || !isPosInt(h.ticketsPerPress)) err('modes.hundred.presses and ticketsPerPress must be positive integers');
   if (!(h.presses * h.ticketsPerPress * prizes.price > 0)) err('modes.hundred: presses × ticketsPerPress × price must be positive');

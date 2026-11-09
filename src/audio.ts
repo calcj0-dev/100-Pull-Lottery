@@ -122,8 +122,7 @@ export function playSound(name: SoundName, channel: Channel = name === 'pon' ? '
   play(channel, SOUNDS[name]);
 }
 
-/** 結果の系統の音を止める（画面を離れたときなど） */
-export function stopSounds(): void {
-  stopChannel('press');
-  stopChannel('result');
+/** 系統の音を止める */
+export function stopSound(channel: Channel): void {
+  stopChannel(channel);
 }

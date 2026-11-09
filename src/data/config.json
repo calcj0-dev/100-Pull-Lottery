@@ -6,6 +6,7 @@
   },
   "luckDisplay": { "minPct": 0.1 },
   "fullScreenPrizes": ["p1"],
+  "bandPrizes": ["p1kumi", "p4", "p3", "p2", "p1adj"],
   "sounds": {
     "press": "pon",
     "miss": null,

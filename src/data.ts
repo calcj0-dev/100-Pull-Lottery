@@ -35,6 +35,8 @@ export type GameConfig = {
   };
   luckDisplay: { minPct: number };
   fullScreenPrizes: string[];
+  /** くじ券の上に帯を出す等級（ゲーム仕様 4章） */
+  bandPrizes: string[];
   sounds: {
     press: string;
     miss: string | null;

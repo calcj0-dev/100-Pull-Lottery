@@ -84,6 +84,9 @@ describe('T-08 データの検査', () => {
     expectBroken((d) => {
       d.config.fullScreenPrizes = ['p0'];
     }, /unknown prize in fullScreenPrizes: p0/);
+    expectBroken((d) => {
+      d.config.bandPrizes = ['p0'];
+    }, /unknown prize in bandPrizes: p0/);
   });
 
   it('運の良さの表の順番の崩れ', () => {

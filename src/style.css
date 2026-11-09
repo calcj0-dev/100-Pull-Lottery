@@ -201,6 +201,7 @@ button.link {
 /* ---- S2 購入中 ---- */
 /* 連打で文字が選択されたり、長押しのメニューが出たりしないように */
 .screen-play {
+  overflow-x: clip;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -341,6 +342,119 @@ button.link {
   text-indent: 0.1em;
 }
 
+/* 組違い賞以上の帯【案】 */
+.band {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: none;
+  width: 112%;
+  padding: 10px 8px;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  background: linear-gradient(90deg, #8f6513, var(--gold-light) 30%, #fff6d8 50%, var(--gold-light) 70%, #8f6513);
+  color: var(--red-dark);
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.band.show {
+  display: block;
+}
+
+/* ---- O1 1等の演出 ---- */
+.jackpot {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #e0463f, var(--red) 45%, #6e1715);
+  color: #fff;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  animation: jackpot-in 0.35s ease-out;
+}
+
+.jackpot-text {
+  position: relative;
+  z-index: 1;
+}
+
+.jackpot-prize {
+  font-size: clamp(64px, 24vw, 120px);
+  font-weight: 900;
+  line-height: 1;
+  color: var(--gold-light);
+  text-shadow: 0 4px 0 #8f6513, 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.jackpot-amount {
+  margin-top: 12px;
+  font-size: clamp(48px, 17vw, 88px);
+  font-weight: 900;
+  line-height: 1.1;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  animation: jackpot-pulse 1.2s ease-in-out infinite;
+}
+
+.jackpot-hint {
+  position: absolute;
+  bottom: calc(48px + env(safe-area-inset-bottom));
+  z-index: 1;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.jackpot-hint.ready {
+  opacity: 0.9;
+}
+
+@keyframes jackpot-in {
+  from {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes jackpot-pulse {
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.confetti i {
+  position: absolute;
+  top: -20px;
+  border-radius: 1px;
+  animation-name: confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes confetti-fall {
+  to {
+    transform: translate(var(--drift), 110dvh) rotate(var(--spin));
+  }
+}
+
 /* ---- S3 結果 ---- */
 .result-bar {
   justify-content: space-between;
@@ -476,5 +590,10 @@ button.link {
 @media (prefers-reduced-motion: reduce) {
   .btn-primary:active {
     transform: none;
+  }
+
+  .jackpot,
+  .jackpot-amount {
+    animation: none;
   }
 }
