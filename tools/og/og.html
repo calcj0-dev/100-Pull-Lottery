@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- OGP 画像 1200×630（技術設計 2章：作品名とくじ券の絵）。文言は src/data/i18n/ja.json の app.name・app.tagline と同じにする -->
+    <style>
+      :root {
+        --bg: #fffdf8;
+        --red: #c8322f;
+        --red-dark: #9f2421;
+        --gold: #c08a1e;
+        --gold-light: #f3d27a;
+        --text: #22201c;
+        --sub: #6b665d;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+        font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif;
+        color: var(--text);
+      }
+      .frame {
+        position: absolute;
+        inset: 0;
+        border-top: 18px solid var(--red);
+        border-bottom: 18px solid var(--red);
+      }
+      .text {
+        position: absolute;
+        left: 80px;
+        top: 150px;
+        width: 620px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 92px;
+        line-height: 1.12;
+        font-weight: 900;
+        letter-spacing: 0.01em;
+      }
+      h1 .num {
+        color: var(--red);
+      }
+      p {
+        margin: 32px 0 0;
+        font-size: 36px;
+        font-weight: 700;
+        color: var(--sub);
+      }
+      .tickets {
+        position: absolute;
+        right: 40px;
+        top: 120px;
+        width: 440px;
+        height: 400px;
+      }
+      .tickets svg {
+        position: absolute;
+        width: 380px;
+        filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.18));
+      }
+      .t1 {
+        left: 0;
+        top: 170px;
+        transform: rotate(-10deg);
+      }
+      .t2 {
+        left: 40px;
+        top: 85px;
+        transform: rotate(4deg);
+      }
+      .t3 {
+        left: 60px;
+        top: 0;
+        transform: rotate(14deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame"></div>
+    <div class="text">
+      <h1>宝くじ<span class="num">100</span>連<br />ガチャ</h1>
+      <p>1枚300円の宝くじを、<br />100回引いてみる。</p>
+    </div>
+    <div class="tickets" id="tickets"></div>
+    <script type="module">
+      // くじ券の絵は画面と同じもの（src/ui/ticket.ts）を使う
+      const src = await (await fetch('../../src/ui/ticket.ts')).text();
+      const art = src.match(/export const TICKET_ART =([\s\S]*?);\s*$/m)[1];
+      const svg = art.split('\n').map((l) => l.trim().replace(/^\+?\s*'/, '').replace(/'\s*\+?$/, '')).join('');
+      const host = document.getElementById('tickets');
+      for (const c of ['t1', 't2', 't3']) host.insertAdjacentHTML('beforeend', svg.replace('class="ticket-art"', `class="${c}"`));
+      document.body.dataset.ready = '1';
+    </script>
+  </body>
+</html>
