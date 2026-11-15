@@ -48,6 +48,7 @@ export type GameConfig = {
     tameru: string;
     tva: string;
     follow: string;
+    lab: string;
     xIntent: string;
     googlePrivacy: string;
     gaOptout: string;

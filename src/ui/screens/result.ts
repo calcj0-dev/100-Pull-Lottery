@@ -28,7 +28,7 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
     .map((p) => h('li', { text: t('result.breakdownRow', { prize: tId('prizes', p.id), amount: yen(p.amount), count: r.counts[p.id]! }) }));
 
   /** 外部リンク（新しいタブ）。押したら main_app_click */
-  const appLink = (text: string, href: string, target: 'tameru' | 'tva' | 'follow', className: string) => {
+  const appLink = (text: string, href: string, target: 'tameru' | 'tva' | 'follow' | 'lab', className: string) => {
     const a = externalLink(text, href);
     a.className = className;
     a.addEventListener('click', () => track('main_app_click', { target }));
@@ -89,6 +89,8 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
         'btn btn-primary',
       ),
     ]),
+    // タイトルへ。ブラウザの戻ると同じ動き（onBack でゲームを片づける）
+    button(t('result.home'), () => history.back(), 'btn btn-home'),
     h('section', { className: 'apps' }, [
       h('h2', { className: 'apps-heading', text: t('links.heading') }),
       h('div', { className: 'app-card' }, [
@@ -99,6 +101,7 @@ export const resultScreen: ScreenFactory<'result'> = (app, params) => {
         h('p', { text: t('links.tva') }),
         appLink(t('links.tvaButton'), config.links.tva, 'tva', 'btn btn-app'),
       ]),
+      appLink(t('links.lab'), config.links.lab, 'lab', 'link follow-link'),
       appLink(t('links.follow'), config.links.follow, 'follow', 'link follow-link'),
     ]),
     h('nav', { className: 'link-row' }, [

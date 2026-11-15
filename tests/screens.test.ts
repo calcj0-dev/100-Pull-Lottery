@@ -48,6 +48,7 @@ describe('画面の流れ', () => {
     const { root } = mount();
     expect(root.textContent).toContain(ja.app.name);
     expect(root.textContent).toContain(ja.common.disclaimer);
+    expect([...root.querySelectorAll('a')].map((a) => a.getAttribute('href'))).toContain(config.links.lab);
     (root.querySelector('.btn-start') as HTMLButtonElement).click();
     const buy = root.querySelector('.btn-buy') as HTMLButtonElement;
     for (let i = 0; i < 100; i++) buy.click();
@@ -66,8 +67,15 @@ describe('画面の流れ', () => {
     expect(hrefs).toContain(config.links.tameru);
     expect(hrefs).toContain(config.links.tva);
     expect(hrefs).toContain(config.links.follow);
+    expect(hrefs).toContain(config.links.lab);
     expect(config.links.tameru).toContain('utm_source=');
     expect(config.links.tva).toContain('utm_source=');
+    expect(config.links.lab).toContain('utm_source=');
+    // 「タイトルに戻る」は戻ると同じ動き
+    const back = vi.spyOn(history, 'back').mockImplementation(() => {});
+    (result.querySelector('.btn-home') as HTMLButtonElement).click();
+    expect(back).toHaveBeenCalled();
+    expect(result.querySelector('.btn-home')!.textContent).toBe(ja.result.home);
     vi.restoreAllMocks();
   });
 });

@@ -15,7 +15,7 @@ export type AnalyticsEvent =
   | { name: 'quit'; props: { pressed: PressedBucket } }
   | { name: 'jackpot'; props: Record<string, never> }
   | { name: 'share_click'; props: { method: 'x_intent' | 'web_share' | 'save_image'; title: string } }
-  | { name: 'main_app_click'; props: { target: 'tameru' | 'tva' | 'follow' } }
+  | { name: 'main_app_click'; props: { target: 'tameru' | 'tva' | 'follow' | 'lab' } }
   | { name: 'retry'; props: Record<string, never> }
   | { name: 'basis_open'; props: { from: 'title' | 'result' } };
 

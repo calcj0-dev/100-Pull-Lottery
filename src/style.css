@@ -198,6 +198,11 @@ button.link {
   font-size: 12px;
 }
 
+.lab-link {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
 /* ---- S2 購入中 ---- */
 /* 連打で文字が選択されたり、長押しのメニューが出たりしないように */
 .screen-play {
@@ -515,6 +520,17 @@ button.link {
 
 .result-actions .btn {
   flex: 1;
+}
+
+/* タイトルに戻る：控えめなボタン */
+.btn-home {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 12px;
+  border: 0;
+  background: none;
+  color: var(--text-sub);
+  font-size: 14px;
 }
 
 .apps {

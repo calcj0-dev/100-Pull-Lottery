@@ -15,7 +15,7 @@ const ALLOWED: Record<string, Record<string, readonly string[] | null>> = {
   quit: { pressed: ['1-9', '10-49', '50-99'] },
   jackpot: {},
   share_click: { method: ['x_intent', 'web_share', 'save_image'], title: null },
-  main_app_click: { target: ['tameru', 'tva', 'follow'] },
+  main_app_click: { target: ['tameru', 'tva', 'follow', 'lab'] },
   retry: {},
   basis_open: { from: ['title', 'result'] },
 };

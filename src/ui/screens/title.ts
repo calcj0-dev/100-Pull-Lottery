@@ -15,6 +15,8 @@ export const titleScreen: ScreenFactory<'title'> = (app) => {
   art.innerHTML = TICKET_ART;
   const credit = externalLink(t('app.credit'), config.links.follow);
   credit.addEventListener('click', () => track('main_app_click', { target: 'follow' }));
+  const lab = externalLink(t('links.lab'), config.links.lab);
+  lab.addEventListener('click', () => track('main_app_click', { target: 'lab' }));
 
   const el = h('section', { className: 'screen screen-title' }, [
     h('div', { className: 'top-bar' }, [versionLabel(), sound.el]),
@@ -33,6 +35,7 @@ export const titleScreen: ScreenFactory<'title'> = (app) => {
     ]),
     disclaimer(),
     h('p', { className: 'credit' }, [credit]),
+    h('p', { className: 'lab-link' }, [lab]),
   ]);
   return { el, unmount: sound.dispose };
 };

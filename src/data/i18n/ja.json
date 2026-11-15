@@ -65,6 +65,7 @@
     "luckUnder": "あなたは上位{pct}%未満の運",
     "titleLabel": "称号",
     "retry": "もう一回",
+    "home": "タイトルに戻る",
     "share": "Xでシェア",
     "shareImage": "画像を付けてシェア",
     "saveImage": "画像を保存"
@@ -88,7 +89,8 @@
     "tameruButton": "TAMERU を見る",
     "tva": "確率の次は、相場に挑戦",
     "tvaButton": "積立投資を超えろ！で遊ぶ",
-    "follow": "つくった人をフォロー"
+    "follow": "つくった人をフォロー",
+    "lab": "ほかのゲーム・ツール（Ted App Lab）"
   },
   "basis": {
     "heading": "計算の前提",
