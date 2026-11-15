@@ -2,9 +2,9 @@
   "version": 1,
   "source": {
     "basis": "2026年の年末ジャンボ宝くじ（第1134回全国）と同じ比率",
-    "checkedAt": "2026-11-06",
-    "ref": "みずほ銀行『宝くじ 発売予定』",
-    "officialChecked": false
+    "checkedAt": "2026-11-15",
+    "ref": "宝くじ公式サイト『年末ジャンボ宝くじ（第1134回）商品概要』",
+    "officialChecked": true
   },
   "price": 300,
   "unitTickets": 20000000,
